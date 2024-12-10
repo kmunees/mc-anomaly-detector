@@ -5,13 +5,13 @@ import sys
 
 
 sys.path.append(str(Path(__file__).parent.absolute()))
-from fuzzywuzzy import fuzz
+from mod.fuzzywuzzy import fuzz
 
-from comm.log_file_reader import LogFileListener
+from mod.log_file_reader import LogFileListener
 
 
-from comm.logger_configuration import logger
-from comm.env_loader import get_logfile_path, get_pattern_file_path
+from mod.logger_configuration import logger
+from mod.env_loader import get_logfile_path, get_pattern_file_path
 
 #Get logger
 logger = logger()
@@ -21,6 +21,8 @@ def detect():
 
     file_path = get_logfile_path()
     folder_to_watch = os.path.abspath(file_path)
+
+    logger.info(folder_to_watch)
 
     if not os.path.isdir(folder_to_watch):
         logger.info(f"Error: The directory {folder_to_watch} does not exist.")
@@ -48,8 +50,7 @@ def detect():
 
 
 def get_patters():
-    with open(get_pattern_file_path(), 'r') as file:
+    file_path = get_pattern_file_path()
+    folder_to_watch = os.path.abspath(file_path)
+    with open(folder_to_watch, 'r') as file:
      return json.load(file)
-
-if __name__ == "__main__":
-    detect()

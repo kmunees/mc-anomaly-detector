@@ -3,16 +3,17 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from pathlib import Path
 import sys
+
+from mod.detector import detect
 from mod.service import print_service
 
 sys.path.append(str(Path(__file__).parent.absolute()))
-from plugins.comm.detector import detect
 
 # Define a Python function for the task
 def detect_anomaly():
     detect()
-    print_service()
-    print("Anomalous logs have been detected")
+    # print_service()
+    # print("Anomalous logs have been detected")
 
 
 def message():
