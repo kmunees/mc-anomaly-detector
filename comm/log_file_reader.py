@@ -1,6 +1,6 @@
 import os
 
-from dags.config.logger_configuration import logger
+from logger_configuration import logger
 
 
 

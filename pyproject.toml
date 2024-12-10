@@ -7,17 +7,8 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "3.12.7"
-pymilvus = "^2.5.0"
 python-dotenv = "^1.0.1"
-llama-index-vector-stores-milvus = "^0.3.0"
-openai = "^1.55.3"
-transformers = "^4.46.3"
-torch = "^2.5.1"
-llama-index = "^0.12.2"
-llama-index-embeddings-huggingface = "^0.4.0"
-llama-index-llms-azure-openai = "^0.3.0"
 apache-airflow = "2.10.3"
-#apache-airflow-providers-google = "10.1.0"
 fuzzywuzzy = "^0.18.0"
 
 [build-system]
