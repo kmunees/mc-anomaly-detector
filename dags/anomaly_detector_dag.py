@@ -1,12 +1,17 @@
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
-# from detector.detector import detect
+from pathlib import Path
+import sys
+from mod.service import print_service
 
+sys.path.append(str(Path(__file__).parent.absolute()))
+from plugins.comm.detector import detect
 
 # Define a Python function for the task
 def detect_anomaly():
-    # detect()
+    detect()
+    print_service()
     print("Anomalous logs have been detected")
 
 
