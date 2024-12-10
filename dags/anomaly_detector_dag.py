@@ -12,7 +12,6 @@ sys.path.append(str(Path(__file__).parent.absolute()))
 # Define a Python function for the task
 def detect_anomaly():
     detect()
-    print("Anomalous logs have been successfully persisted to the database.")
 
 def message():
     print("")
