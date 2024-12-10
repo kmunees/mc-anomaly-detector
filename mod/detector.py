@@ -51,9 +51,9 @@ def detect():
             f"The following logs have been identified as anomalies based on matching patterns:\n{json.dumps(matched_logs, indent=4)}")
         if matched_logs:
             send_to_signals_api_batch(matched_logs)
-            print("Anomalous logs have been successfully persisted to the database.")
+            logger.info("Anomalous logs have been successfully persisted to the database.")
         else:
-            print("No matched logs available to send to the signals API.") #Todo use logger
+            logger.error("No matched logs available to send to the signals API.")
 
 
 def send_to_signals_api_batch(matched_logs):
@@ -75,13 +75,13 @@ def send_to_signals_api_batch(matched_logs):
     )
 
     # Log and send the request
-    logger.info(f"Sending batch to API:\n{body}")
+    logger.info(f"Persisting batch to timeseries DataBase:\n{body}")
     try:
         response = requests.post(url, headers=headers, data=body)
         response.raise_for_status()
         logger.info(f"API Response: {response.status_code} {response.text}")
     except requests.exceptions.RequestException as e:
-        logger.error(f"Failed to send batch data to API: {e}")
+        logger.error(f"Failed to persist batch data to API: {e}")
 
 def encode_base64(value):
     encoded = base64.b64encode(value.encode('utf-8')).decode('utf-8')

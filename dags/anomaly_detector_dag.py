@@ -3,10 +3,10 @@ from airflow import DAG
 from airflow.operators.python import PythonOperator
 from pathlib import Path
 import sys
-
+from mod.logger_configuration import logger
 from mod.detector import detect
-from mod.service import print_service
 
+logger = logger()
 sys.path.append(str(Path(__file__).parent.absolute()))
 
 # Define a Python function for the task
@@ -14,7 +14,7 @@ def detect_anomaly():
     detect()
 
 def message():
-    print("")
+    logger.info("Processing the patch is completed successfully")
 
 # Default arguments for the DAG
 default_args = {
