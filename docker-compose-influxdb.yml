@@ -1,0 +1,20 @@
+version: '2'
+networks:
+  app-network:
+    name: app-network
+services:
+  influxdb:
+    image: influxdb:2.7.10
+    networks:
+      - app-network
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=influxdb
+      - DOCKER_INFLUXDB_INIT_PASSWORD=password
+      - DOCKER_INFLUXDB_INIT_ORG=1tegrate
+      - DOCKER_INFLUXDB_INIT_BUCKET=resources
+    ports:
+      - 8086:8086
+    container_name: influxdb
+#docker-compose -f docker-compose-influxdb.yml up -d
+#S0Elzn9Y6bOp_FxLGGy61Cjj7RCUM89gQi0k09qB8_nZAQuYQWMasxfrU3dWhoOoONPMrPJoIlqWIaJYNEBHjg==

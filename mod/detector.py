@@ -2,7 +2,9 @@ import os
 import json
 from pathlib import Path
 import sys
-
+from urllib.parse import quote
+import base64
+import requests
 
 sys.path.append(str(Path(__file__).parent.absolute()))
 from mod.fuzzywuzzy import fuzz
@@ -47,6 +49,43 @@ def detect():
                     break
         logger.info(
             f"The following logs have been identified as anomalies based on matching patterns:\n{json.dumps(matched_logs, indent=4)}")
+        if matched_logs:
+            send_to_signals_api_batch(matched_logs)
+            print("Anomalous logs have been successfully persisted to the database.")
+        else:
+            print("No matched logs available to send to the signals API.") #Todo use logger
+
+
+def send_to_signals_api_batch(matched_logs):
+    url = "http://192.168.29.111:8086/api/v2/write?bucket=mc_signals&org=1tegrate"
+    headers = {
+        "Authorization": "Token S0Elzn9Y6bOp_FxLGGy61Cjj7RCUM89gQi0k09qB8_nZAQuYQWMasxfrU3dWhoOoONPMrPJoIlqWIaJYNEBHjg==",
+        "Content-Type": "text/plain"
+    }
+
+    # Build the body dynamically for batch data
+    body = "\n".join(
+        f"signals_api,"
+        f"matched_expression={quote(log['matched_expression'])},"
+        f"log_type={quote(log['log_type'])},"
+        f"category={quote(log['category'])},"
+        f"severity={quote(log['severity'])} "
+        f"value=\"{encode_base64(log['log'])}\""
+        for log in matched_logs
+    )
+
+    # Log and send the request
+    logger.info(f"Sending batch to API:\n{body}")
+    try:
+        response = requests.post(url, headers=headers, data=body)
+        response.raise_for_status()
+        logger.info(f"API Response: {response.status_code} {response.text}")
+    except requests.exceptions.RequestException as e:
+        logger.error(f"Failed to send batch data to API: {e}")
+
+def encode_base64(value):
+    encoded = base64.b64encode(value.encode('utf-8')).decode('utf-8')
+    return quote(encoded)
 
 
 def get_patters():
