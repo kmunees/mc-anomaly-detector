@@ -7,10 +7,7 @@ from mod.ts_influx_client import send_signals_timeseries_db
 
 sys.path.append(str(Path(__file__).parent.absolute()))
 from mod.fuzzywuzzy import fuzz
-
 from mod.log_file_reader import LogFileListener
-
-
 from mod.logger_configuration import logger
 from mod.env_loader import get_logfile_path
 
@@ -57,8 +54,3 @@ def detect():
         else:
             logger.error("No matched logs available to send to the signals API.")
 
-# def get_patters():
-#     file_path = get_pattern_file_path()
-#     folder_to_watch = os.path.abspath(file_path)
-#     with open(folder_to_watch, 'r') as file:
-#      return json.load(file)
