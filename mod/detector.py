@@ -53,13 +53,13 @@ def detect():
             f"The following logs have been identified as anomalies based on matching patterns:\n{json.dumps(matched_logs, indent=4)}")
         if matched_logs:
             logger.info(f"Size of patch content {len(matched_logs)}")
-            send_to_signals_api_batch(matched_logs)
+            send_signals_timeseries_db(matched_logs)
             logger.info("Anomalous logs have been successfully persisted to the database.")
         else:
             logger.error("No matched logs available to send to the signals API.")
 
 
-def send_to_signals_api_batch(matched_logs):
+def send_signals_timeseries_db(matched_logs):
     url = "http://192.168.29.111:8086/api/v2/write?bucket=mc_signals&org=1tegrate"
     headers = {
         "Authorization": "Token S0Elzn9Y6bOp_FxLGGy61Cjj7RCUM89gQi0k09qB8_nZAQuYQWMasxfrU3dWhoOoONPMrPJoIlqWIaJYNEBHjg==",
