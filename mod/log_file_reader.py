@@ -1,6 +1,6 @@
 import os
 from logger_configuration import logger
-from mod.pg_client import is_file_processed, insert_processed_file
+from mod.pg_client import is_file_processed, insert_processed_file_path
 
 #Get logger
 logger = logger()
@@ -28,7 +28,7 @@ class LogFileListener:
 
                 if not is_file_processed(file_path):
                     # Insert the new file path into the database
-                    insert_processed_file(file_path)
+                    insert_processed_file_path(file_path)
                     logger.info(f"New log file detected: {file_path}")
                     try:
                         with open(file_path, 'r') as file:

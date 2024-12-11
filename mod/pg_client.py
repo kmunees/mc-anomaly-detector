@@ -10,7 +10,7 @@
 # );
 import psycopg2
 
-def insert_processed_file(new_file):
+def insert_processed_file_path(new_file):
     db_config = {
         'dbname': 'airflow',
         'user': 'airflow',
