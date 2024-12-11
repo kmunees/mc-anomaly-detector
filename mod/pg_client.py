@@ -115,6 +115,10 @@
 
 
 import psycopg2
+from mod.logger_configuration import logger
+
+#Get logger
+logger = logger()
 
 def insert_processed_file_path(new_file):
     db_config = {
@@ -150,3 +154,57 @@ def is_file_processed(file_path):
     except psycopg2.Error as e:
         print(f"Database error: {e}")
         return False
+
+def get_patterns_from_db():
+    """
+    Fetch patterns from the mc_patterns table in the database.
+    """
+    db_config = {
+        'dbname': 'airflow',
+        'user': 'airflow',
+        'password': 'airflow',
+        'host': '192.168.29.111',
+        'port': 5432
+    }
+    try:
+        # Connect to the database
+        conn = psycopg2.connect(**db_config)
+        cursor = conn.cursor()
+
+        # Query to fetch patterns
+        query = """
+        SELECT 
+            id, score, description, "type", category, severity, log_source, log_type, 
+            pattern_expression, pattern_conditions::jsonb, examples::jsonb, 
+            action_flag, action_notification, action_severity_threshold 
+        FROM public.mc_patterns;
+        """
+        cursor.execute(query)
+        records = cursor.fetchall()
+        # Transform the records into a list of dictionaries
+        patterns = []
+        for record in records:
+            patterns.append({
+                "id": record[0],
+                "score": record[1],
+                "description": record[2],
+                "type": record[3],
+                "category": record[4],
+                "severity": record[5],
+                "log_source": record[6],
+                "log_type": record[7],
+                "pattern_expression": record[8],
+                "pattern_conditions": record[9],
+                "examples": record[10],
+                "action_flag": record[11],
+                "action_notification": record[12],
+                "action_severity_threshold": record[13],
+            })
+
+        cursor.close()
+        conn.close()
+        return patterns
+
+    except Exception as e:
+        logger.error(f"Error fetching patterns from database: {str(e)}")
+        return []

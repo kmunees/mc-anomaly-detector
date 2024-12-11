@@ -5,7 +5,7 @@ import sys
 from urllib.parse import quote
 import base64
 import requests
-
+from mod.pg_client import get_patterns_from_db
 sys.path.append(str(Path(__file__).parent.absolute()))
 from mod.fuzzywuzzy import fuzz
 
@@ -34,12 +34,12 @@ def detect():
         logs = log_file_handler.read_logs_from_files()
         if not logs:
             return
-        patterns = get_patters()
+        patterns = get_patterns_from_db()
         matched_logs = []
 
         for log in logs:
             for pattern in patterns:
-                pattern_expression = pattern["pattern"]["conditions"][0]["condition"]
+                pattern_expression = pattern["pattern_expression"]
                 if fuzz.partial_ratio(pattern_expression, log) > 80:
                     matched_logs.append({
                         "log": log,
@@ -91,8 +91,8 @@ def encode_base64(value):
     return quote(encoded)
 
 
-def get_patters():
-    file_path = get_pattern_file_path()
-    folder_to_watch = os.path.abspath(file_path)
-    with open(folder_to_watch, 'r') as file:
-     return json.load(file)
+# def get_patters():
+#     file_path = get_pattern_file_path()
+#     folder_to_watch = os.path.abspath(file_path)
+#     with open(folder_to_watch, 'r') as file:
+#      return json.load(file)
