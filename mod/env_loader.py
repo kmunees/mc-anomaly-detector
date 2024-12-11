@@ -82,3 +82,60 @@ def get_model_api_version():
     # Ensure the environment variables are loaded first
     load_environment_variables()
     return os.getenv('API_VERSION')
+
+def get_ts_influx_url():
+    """
+    Get the INFLUX_HOST environment variable after loading the .env file.
+    """
+    # Ensure the environment variables are loaded first
+    load_environment_variables()
+    return os.getenv('INFLUX_URL')
+
+def get_ts_influx_token():
+    """
+    Get the INFLUX_TOKEN environment variable after loading the .env file.
+    """
+    # Ensure the environment variables are loaded first
+    load_environment_variables()
+    return os.getenv('INFLUX_TOKEN')
+
+def get_pgsql_db():
+    """
+    Get the POSTGRESQL_DB environment variable after loading the .env file.
+    """
+    # Ensure the environment variables are loaded first
+    load_environment_variables()
+    return os.getenv('POSTGRESQL_DB')
+
+def get_pgsql_user():
+    """
+    Get the POSTGRESQL_USER environment variable after loading the .env file.
+    """
+    # Ensure the environment variables are loaded first
+    load_environment_variables()
+    return os.getenv('POSTGRESQL_USER')
+
+def get_pgsql_password():
+    """
+    Get the POSTGRESQL_PASSWORD environment variable after loading the .env file.
+    """
+    # Ensure the environment variables are loaded first
+    load_environment_variables()
+    return os.getenv('POSTGRESQL_PASSWORD')
+
+
+def get_pgsql_host():
+    """
+    Get the POSTGRESQL_HOST environment variable after loading the .env file.
+    """
+    # Ensure the environment variables are loaded first
+    load_environment_variables()
+    return os.getenv('POSTGRESQL_HOST')
+
+def get_pgsql_port():
+    """
+    Get the POSTGRESQL_PORT environment variable after loading the .env file.
+    """
+    # Ensure the environment variables are loaded first
+    load_environment_variables()
+    return os.getenv('POSTGRESQL_PORT')
