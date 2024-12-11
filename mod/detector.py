@@ -32,6 +32,8 @@ def detect():
         logger.info(f"Monitoring folder: {folder_to_watch}")
         log_file_handler = LogFileListener(folder_to_watch)
         logs = log_file_handler.read_logs_from_files()
+        if not logs:
+            return
         patterns = get_patters()
         matched_logs = []
 
@@ -50,6 +52,7 @@ def detect():
         logger.info(
             f"The following logs have been identified as anomalies based on matching patterns:\n{json.dumps(matched_logs, indent=4)}")
         if matched_logs:
+            logger.info(f"Size of patch content {len(matched_logs)}")
             send_to_signals_api_batch(matched_logs)
             logger.info("Anomalous logs have been successfully persisted to the database.")
         else:
