@@ -45,7 +45,7 @@ def get_patterns_from_db():
         # Query to fetch patterns
         query = """
         SELECT 
-            id, score, description, "type", category, severity, log_source, log_type, 
+            id, description, "type", category, severity, log_source, log_type, 
             pattern_expression, pattern_conditions::jsonb, examples::jsonb, 
             action_flag, action_notification, action_severity_threshold 
         FROM public.mc_patterns;
@@ -57,19 +57,18 @@ def get_patterns_from_db():
         for record in records:
             patterns.append({
                 "id": record[0],
-                "score": record[1],
-                "description": record[2],
-                "type": record[3],
-                "category": record[4],
-                "severity": record[5],
-                "log_source": record[6],
-                "log_type": record[7],
-                "pattern_expression": record[8],
-                "pattern_conditions": record[9],
-                "examples": record[10],
-                "action_flag": record[11],
-                "action_notification": record[12],
-                "action_severity_threshold": record[13],
+                "description": record[1],
+                "type": record[2],
+                "category": record[3],
+                "severity": record[4],
+                "log_source": record[5],
+                "log_type": record[6],
+                "pattern_expression": record[7],
+                "pattern_conditions": record[8],
+                "examples": record[9],
+                "action_flag": record[10],
+                "action_notification": record[11],
+                "action_severity_threshold": record[12],
             })
 
         cursor.close()

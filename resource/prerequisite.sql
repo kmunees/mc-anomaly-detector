@@ -11,21 +11,24 @@ CREATE TABLE public.mc_files (
 
 
 CREATE TABLE public.mc_patterns (
-    id SERIAL PRIMARY KEY,
-    description TEXT NOT NULL,
-    score VARCHAR(50),
-    type VARCHAR(50) NOT NULL,
-    category VARCHAR(50) NOT NULL,
-    severity VARCHAR(20) NOT NULL,
-    log_source VARCHAR(50) NOT NULL,
-    log_type VARCHAR(20) NOT NULL,
-    pattern_expression TEXT NOT NULL,
-    pattern_conditions JSONB NOT NULL,
-    examples JSONB NOT NULL,
-    action_flag BOOLEAN NOT NULL,
-    action_notification VARCHAR(50) NOT NULL,
-    action_severity_threshold VARCHAR(20) NOT NULL
+	id serial4 NOT NULL,
+	description text NOT NULL,
+	"type" varchar(50) NOT NULL,
+	category varchar(50) NOT NULL,
+	severity varchar(20) NOT NULL,
+	anomalous_log_entry text,
+	log_source varchar(50) NOT NULL,
+	log_type varchar(20) NOT NULL,
+	pattern_expression text NOT NULL ,
+	pattern_conditions jsonb NOT NULL,
+	examples jsonb NOT NULL,
+	action_flag bool NOT NULL,
+	action_notification varchar(50) NOT NULL,
+	action_severity_threshold varchar(20) NOT NULL,
+	CONSTRAINT mc_patterns_pkey PRIMARY KEY (id)
 );
+ALTER TABLE public.mc_patterns
+ADD CONSTRAINT unique_anomalous_log_entry_pattern_expression UNIQUE (anomalous_log_entry, pattern_expression);
 
 
 INSERT INTO public.mc_patterns (
