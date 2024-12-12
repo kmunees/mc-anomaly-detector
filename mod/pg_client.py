@@ -1,5 +1,3 @@
-
-
 from mod.env_loader import get_pgsql_db, get_pgsql_password, get_pgsql_host, get_pgsql_port, get_pgsql_user
 import psycopg2
 from mod.logger_configuration import logger
